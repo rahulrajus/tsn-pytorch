@@ -222,7 +222,15 @@ TSN Configurations:
         return output.squeeze(1)
 
     def get_feature(self, input):
+        sample_len = (3 if self.modality == "RGB" else 2) * self.new_length
 
+        if self.modality == 'RGBDiff':
+            sample_len = 3 * self.new_length
+            input = self._get_diff(input)
+        
+        feat_out = self.feature_model(input.view(
+            (-1, sample_len) + inpust.size()[-2:]))
+        
     def _get_diff(self, input, keep_rgb=False):
         input_c = 3 if self.modality in ["RGB", "RGBDiff"] else 2
         input_view = input.view(
