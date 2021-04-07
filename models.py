@@ -39,9 +39,6 @@ TSN Configurations:
 
         self._prepare_base_model(base_model)
 
-        self.feature_model = nn.Sequential(*list(base_model.children())[:-1])
-        print(self.feature_model)
-
         feature_dim = self._prepare_tsn(num_class)
 
         if self.modality == 'Flow':
@@ -52,7 +49,9 @@ TSN Configurations:
             print("Converting the ImageNet model to RGB+Diff init model")
             self.base_model = self._construct_diff_model(self.base_model)
             print("Done. RGBDiff model ready.")
-
+        self.feature_model = nn.Sequential(
+            *list(self.base_model.children())[:-1])
+        print(self.feature_model)
         self.consensus = ConsensusModule(consensus_type)
 
         if not self.before_softmax:
@@ -227,10 +226,10 @@ TSN Configurations:
         if self.modality == 'RGBDiff':
             sample_len = 3 * self.new_length
             input = self._get_diff(input)
-        
+
         feat_out = self.feature_model(input.view(
-            (-1, sample_len) + inpust.size()[-2:]))
-        
+            (-1, sample_len) + input.size()[-2:]))
+
     def _get_diff(self, input, keep_rgb=False):
         input_c = 3 if self.modality in ["RGB", "RGBDiff"] else 2
         input_view = input.view(
