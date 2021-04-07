@@ -52,8 +52,8 @@ net = TSN(num_class, 1, args.modality,
           dropout=args.dropout)
 
 checkpoint = torch.load(args.weights)
-print(
-    "model epoch {} best prec@1: {}".format(checkpoint['epoch'], checkpoint['best_prec1']))
+# print(
+# "model epoch {} best prec@1: {}".format(checkpoint['epoch'], checkpoint['best_prec1']))
 
 base_dict = {'.'.join(k.split('.')[1:]): v for k, v in list(
     checkpoint['state_dict'].items())}
