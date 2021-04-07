@@ -101,3 +101,4 @@ ENV/
 .mypy_cache/
 
 .idea
+tf_model_zoo/bninception/bn_inception-9f5701afb96c8044.pth
