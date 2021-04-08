@@ -132,6 +132,7 @@ def eval_video(video_data):
 
     input_var = torch.autograd.Variable(data.view(-1, length, data.size(2), data.size(3)),
                                         volatile=True)
+    print(input_var)
     rst = net(input_var).data.cpu().numpy().copy()
     return i, rst.reshape((num_crop, args.test_segments, num_class)).mean(axis=0).reshape(
         (args.test_segments, 1, num_class)
