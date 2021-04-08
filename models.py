@@ -204,7 +204,7 @@ TSN Configurations:
         sample_len = (3 if ctx['modality'] == "RGB" else 2) * ctx['new_length']
 
         if ctx['modality'] == 'RGBDiff':
-            sample_len = 3 * self.new_length
+            sample_len = 3 * ctx['new_length']
             input = ctx['_get_diff'](input)
 
         base_out = ctx['base_model'](input.view(
@@ -219,6 +219,7 @@ TSN Configurations:
             base_out = base_out.view(
                 (-1, ctx['num_segments']) + base_out.size()[1:])
         print(base_out.shape)
+
         output = ctx['consensus'](base_out)
         return output.squeeze(1)
 
