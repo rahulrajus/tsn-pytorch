@@ -60,9 +60,7 @@ ctx = {
     'before_softmax': net.before_softmax,
     'reshape': net.reshape,
     'num_segments': net.num_segments,
-    'consensus': net.consensus,
-    'softmax': net.softmax,
-
+    'consensus': net.consensus
 }
 checkpoint = torch.load(args.weights)
 # print(

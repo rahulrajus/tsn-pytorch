@@ -213,8 +213,8 @@ TSN Configurations:
         if ctx['dropout'] > 0:
             base_out = ctx['new_fc'](base_out)
 
-        if not ctx['before_softmax']:
-            base_out = ctx['softmax'](base_out)
+        # if not ctx['before_softmax']:
+        #     base_out = ctx['softmax'](base_out)
         if ctx['reshape']:
             base_out = base_out.view(
                 (-1, ctx['num_segments']) + base_out.size()[1:])
