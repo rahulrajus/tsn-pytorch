@@ -201,25 +201,25 @@ TSN Configurations:
 
     @staticmethod
     def forward(ctx, input):
-        sample_len = (3 if self.modality == "RGB" else 2) * self.new_length
+        sample_len = (3 if ctx['modality'] == "RGB" else 2) * ctx['new_length']
 
         if ctx['modality'] == 'RGBDiff':
             sample_len = 3 * self.new_length
-            input = self._get_diff(input)
+            input = ctx['_get_diff'](input)
 
-        base_out = self.base_model(input.view(
+        base_out = ctx['base_model'](input.view(
             (-1, sample_len) + input.size()[-2:]))
 
-        if self.dropout > 0:
-            base_out = self.new_fc(base_out)
+        if ctx['dropout'] > 0:
+            base_out = ctx['new_fc'](base_out)
 
-        if not self.before_softmax:
-            base_out = self.softmax(base_out)
-        if self.reshape:
+        if not ctx['before_softmax']:
+            base_out = ctx['softmax'](base_out)
+        if ctx['reshape']:
             base_out = base_out.view(
-                (-1, self.num_segments) + base_out.size()[1:])
+                (-1, ctx['num_segments']) + base_out.size()[1:])
 
-        output = self.consensus(base_out)
+        output = ctx['consensus'](base_out)
         return output.squeeze(1)
 
     def get_feature(self, input):
