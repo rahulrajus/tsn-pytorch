@@ -200,10 +200,10 @@ TSN Configurations:
         ]
 
     @staticmethod
-    def forward(input):
+    def forward(ctx, input):
         sample_len = (3 if self.modality == "RGB" else 2) * self.new_length
 
-        if self.modality == 'RGBDiff':
+        if ctx['modality'] == 'RGBDiff':
             sample_len = 3 * self.new_length
             input = self._get_diff(input)
 
