@@ -45,12 +45,20 @@ elif args.dataset == 'kinetics':
     num_class = 400
 # else:
 #     raise ValueError('Unknown dataset '+args.dataset)
+activation = {}
+
+
+def get_activation(name):
+    def hook(model, input, output):
+        activation[name] = output.detach()
+    return hook
+
 
 net = TSN(num_class, 1, args.modality,
           base_model=args.arch,
           consensus_type=args.crop_fusion_type,
           dropout=args.dropout)
-print(net)
+print(net.base_model.global_pool)
 ctx = {
     'modality': net.modality,
     'new_length': net.new_length,
