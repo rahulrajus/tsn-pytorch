@@ -59,6 +59,7 @@ checkpoint = torch.load(args.weights)
 # base_dict = {'.'.join(k.split('.')[1:]): v for k, v in list(
 #     checkpoint.items())}
 base_dict = {}
+count = 0
 for k, v in checkpoint.items():
     count = count + 1
     print(count, k)
