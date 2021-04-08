@@ -199,6 +199,7 @@ TSN Configurations:
              'name': "BN scale/shift"},
         ]
 
+    @staticmethod
     def forward(self, input):
         sample_len = (3 if self.modality == "RGB" else 2) * self.new_length
 
