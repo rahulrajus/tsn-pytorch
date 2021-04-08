@@ -59,6 +59,7 @@ net = TSN(num_class, 1, args.modality,
           consensus_type=args.crop_fusion_type,
           dropout=args.dropout)
 print(net.base_model.global_pool)
+net.base_model.global_pool.register_forward_hook(get_activation('global_pool'))
 ctx = {
     'modality': net.modality,
     'new_length': net.new_length,
@@ -82,7 +83,6 @@ base_dict = {}
 count = 0
 for k, v in checkpoint.items():
     count = count + 1
-    print(count, k)
     if 415 > count > 18:
         base_dict.setdefault(k[7:], checkpoint[k])
     if count < 19:
@@ -155,6 +155,7 @@ def eval_video(video_data):
     print(input_var)
 
     rst = net(ctx, input_var).data.cpu().numpy().copy()
+    print("FEATURE: ", activation['global_pool'])
     return i, rst.reshape((num_crop, args.test_segments, num_class)).mean(axis=0).reshape(
         (args.test_segments, 1, num_class)
     ), label[0]
