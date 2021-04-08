@@ -57,7 +57,7 @@ checkpoint = torch.load(args.weights)
 # print(checkpoint)
 # print(net)
 base_dict = {'.'.join(k.split('.')[1:]): v for k, v in list(
-    checkpoint['state_dict'].items())}
+    checkpoint.items())}
 net.load_state_dict(base_dict)
 
 if args.test_crops == 1:
