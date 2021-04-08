@@ -61,7 +61,7 @@ checkpoint = torch.load(args.weights)
 base_dict = {}
 for k, v in checkpoint.items():
     count = count + 1
-    print count, k
+    print(count, k)
     if 415 > count > 18:
         base_dict.setdefault(k[7:], checkpoint[k])
     if count < 19:
