@@ -51,6 +51,7 @@ TSN Configurations:
             print("Done. RGBDiff model ready.")
         self.feature_model = nn.Sequential(
             *list(self.base_model.children())[:-1])
+        print(self.base_model)
         print(self.feature_model)
         self.consensus = ConsensusModule(consensus_type)
 
