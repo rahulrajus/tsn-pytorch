@@ -218,7 +218,7 @@ TSN Configurations:
         if ctx['reshape']:
             base_out = base_out.view(
                 (-1, ctx['num_segments']) + base_out.size()[1:])
-
+        print(base_out)
         output = ctx['consensus'](base_out)
         return output.squeeze(1)
 
