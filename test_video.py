@@ -133,7 +133,19 @@ def eval_video(video_data):
     input_var = torch.autograd.Variable(data.view(-1, length, data.size(2), data.size(3)),
                                         volatile=True)
     print(input_var)
-    rst = net(input_var).data.cpu().numpy().copy()
+    ctx = {
+        'modality': net.modality,
+        'new_length': net.new_length,
+        '_get_diff': net._get_diff,
+        'base_model': net.base_model,
+        'dropout': net.dropout,
+        'new_fc': net.new_fc,
+        'before_softmax': net.before_softmax,
+        'reshape': net.reshape,
+        'num_segments': net.num_segments,
+        'consensus': net.consensus
+    }
+    rst = net(ctx, input_var).data.cpu().numpy().copy()
     return i, rst.reshape((num_crop, args.test_segments, num_class)).mean(axis=0).reshape(
         (args.test_segments, 1, num_class)
     ), label[0]
