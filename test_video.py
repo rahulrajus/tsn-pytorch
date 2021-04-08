@@ -68,8 +68,8 @@ for k, v in checkpoint.items():
     if count < 19:
         base_dict.setdefault(k, checkpoint[k])
 base_dict.setdefault(
-    'new_fc.weight', checkpoint['base_model.fc-action.1.weight'])
-base_dict.setdefault('new_fc.bias', checkpoint['base_model.fc-action.1.bias'])
+    'new_fc.weight', checkpoint['base_model.fc_action.1.weight'])
+base_dict.setdefault('new_fc.bias', checkpoint['base_model.fc_action.1.bias'])
 
 net.load_state_dict(base_dict)
 
