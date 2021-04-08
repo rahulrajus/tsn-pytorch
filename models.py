@@ -200,7 +200,7 @@ TSN Configurations:
         ]
 
     @staticmethod
-    def forward(self, input):
+    def forward(input):
         sample_len = (3 if self.modality == "RGB" else 2) * self.new_length
 
         if self.modality == 'RGBDiff':
