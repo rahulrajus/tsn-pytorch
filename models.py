@@ -218,9 +218,9 @@ TSN Configurations:
         if ctx['reshape']:
             base_out = base_out.view(
                 (-1, ctx['num_segments']) + base_out.size()[1:])
-
-        output = ctx['consensus'](base_out)
-        return output.squeeze(1)
+        return base_out
+        # output = ctx['consensus'](base_out)
+        # return output.squeeze(1)
 
     def get_feature(self, input):
         sample_len = (3 if self.modality == "RGB" else 2) * self.new_length
