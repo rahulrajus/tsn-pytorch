@@ -49,10 +49,10 @@ TSN Configurations:
             print("Converting the ImageNet model to RGB+Diff init model")
             self.base_model = self._construct_diff_model(self.base_model)
             print("Done. RGBDiff model ready.")
-        self.feature_model = nn.Sequential(
-            *list(self.base_model.children())[:-1])
-        print(self.base_model)
-        print(self.feature_model)
+        # self.feature_model = nn.Sequential(
+        #     *list(self.base_model.children())[:-1])
+        # print(self.base_model)
+        # print(self.feature_model)
         self.consensus = ConsensusModule(consensus_type)
 
         if not self.before_softmax:
