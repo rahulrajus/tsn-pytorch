@@ -56,8 +56,20 @@ checkpoint = torch.load(args.weights)
 # "model epoch {} best prec@1: {}".format(checkpoint['epoch'], checkpoint['best_prec1']))
 # print(checkpoint)
 # print(net)
-base_dict = {'.'.join(k.split('.')[1:]): v for k, v in list(
-    checkpoint.items())}
+# base_dict = {'.'.join(k.split('.')[1:]): v for k, v in list(
+#     checkpoint.items())}
+base_dict = {}
+for k, v in checkpoint.items():
+    count = count + 1
+    print count, k
+    if 415 > count > 18:
+        base_dict.setdefault(k[7:], checkpoint[k])
+    if count < 19:
+        base_dict.setdefault(k, checkpoint[k])
+base_dict.setdefault(
+    'new_fc.weight', checkpoint['base_model.fc-action.1.weight'])
+base_dict.setdefault('new_fc.bias', checkpoint['base_model.fc-action.1.bias'])
+
 net.load_state_dict(base_dict)
 
 if args.test_crops == 1:
