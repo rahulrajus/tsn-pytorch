@@ -152,7 +152,7 @@ def eval_video(video_data):
 
     input_var = torch.autograd.Variable(data.view(-1, length, data.size(2), data.size(3)),
                                         volatile=True)
-    print("INPUT", input_var.shape())
+    print("INPUT", input_var.shape)
 
     rst = net(ctx, input_var).data.cpu().numpy().copy()
     print("FEATURE: ", activation['fc'])
