@@ -108,7 +108,7 @@ else:
         "Only 1 and 10 crops are supported while we got {}".format(args.test_crops))
 
 data_loader = torch.utils.data.DataLoader(
-    TSNDataSet("", args.test_list, num_segments=args.test_segments,
+    TSNDataSet("", args.test_list, num_segments=2999,
                new_length=1 if args.modality == "RGB" else 5,
                modality=args.modality,
                image_tmpl="{:06d}.jpg" if args.modality in [
