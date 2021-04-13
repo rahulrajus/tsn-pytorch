@@ -155,7 +155,7 @@ def eval_video(video_data):
     print(input_var)
 
     rst = net(ctx, input_var).data.cpu().numpy().copy()
-    print("FEATURE: ", activation['fcc'])
+    print("FEATURE: ", activation['fc'])
     print(activation['fc'].shape)
     return i, rst.reshape((num_crop, args.test_segments, num_class)).mean(axis=0).reshape(
         (args.test_segments, 1, num_class)
