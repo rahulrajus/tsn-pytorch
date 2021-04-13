@@ -4,6 +4,7 @@ import time
 import numpy as np
 import torch.nn.parallel
 import torch.optim
+import torch
 from sklearn.metrics import confusion_matrix
 
 from dataset import TSNDataSet
@@ -177,7 +178,7 @@ for i, (data, label) in data_gen:
     print('video {} done, total {}/{}, average {} sec/video'.format(i, i+1,
                                                                     total_num,
                                                                     float(cnt_time) / (i+1)))
-feat_tot = torch.cat(feat)
+feat_tot = torch.cat(ft)
 print(feat_tot)
 video_pred = [np.argmax(np.mean(x[0], axis=0)) for x in output]
 
