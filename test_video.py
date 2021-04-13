@@ -136,6 +136,8 @@ data_gen = enumerate(data_loader)
 total_num = len(data_loader.dataset)
 output = []
 
+ft = []
+
 
 def eval_video(video_data):
     i, data, label = video_data
@@ -157,6 +159,7 @@ def eval_video(video_data):
     rst = net(ctx, input_var).data.cpu().numpy().copy()
     print("FEATURE: ", activation['fc'])
     print(activation['fc'].shape)
+    ft.append(activation['fc'])
     return i, rst.reshape((num_crop, args.test_segments, num_class)).mean(axis=0).reshape(
         (args.test_segments, 1, num_class)
     ), label[0]
@@ -174,7 +177,8 @@ for i, (data, label) in data_gen:
     print('video {} done, total {}/{}, average {} sec/video'.format(i, i+1,
                                                                     total_num,
                                                                     float(cnt_time) / (i+1)))
-
+feat_tot = torch.cat(feat)
+print(feat_tot)
 video_pred = [np.argmax(np.mean(x[0], axis=0)) for x in output]
 
 video_labels = [x[1] for x in output]
