@@ -179,7 +179,7 @@ for i, (data, label) in data_gen:
                                                                     total_num,
                                                                     float(cnt_time) / (i+1)))
 feat_tot = torch.cat(ft)
-print(feat_tot)
+print(feat_tot.shape)
 video_pred = [np.argmax(np.mean(x[0], axis=0)) for x in output]
 
 video_labels = [x[1] for x in output]
