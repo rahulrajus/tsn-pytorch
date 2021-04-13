@@ -58,7 +58,7 @@ net = TSN(num_class, 1, args.modality,
           base_model=args.arch,
           consensus_type=args.crop_fusion_type,
           dropout=args.dropout)
-print(net.base_model.global_pool)
+print(net)
 net.base_model.global_pool.register_forward_hook(get_activation('global_pool'))
 ctx = {
     'modality': net.modality,
