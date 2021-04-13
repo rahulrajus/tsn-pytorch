@@ -142,6 +142,7 @@ ft = []
 
 def eval_video(video_data):
     i, data, label = video_data
+    print("SHAPE", data.shape)
     num_crop = args.test_crops
 
     if args.modality == 'RGB':
