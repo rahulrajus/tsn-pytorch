@@ -59,7 +59,7 @@ net = TSN(num_class, 1, args.modality,
           consensus_type=args.crop_fusion_type,
           dropout=args.dropout)
 print(net)
-net.base_model.global_pool.register_forward_hook(get_activation('global_pool'))
+net.base_model.fc.register_forward_hook(get_activation('fc'))
 ctx = {
     'modality': net.modality,
     'new_length': net.new_length,
