@@ -24,7 +24,7 @@ parser.add_argument('--arch', type=str, default="resnet101")
 parser.add_argument('--save_scores', type=str, default=None)
 parser.add_argument('--test_segments', type=int, default=1)
 parser.add_argument('--max_num', type=int, default=-1)
-parser.add_argument('--test_crops', type=int, default=10)
+parser.add_argument('--test_crops', type=int, default=1)
 parser.add_argument('--input_size', type=int, default=224)
 parser.add_argument('--crop_fusion_type', type=str, default='avg',
                     choices=['avg', 'max', 'topk'])
@@ -108,7 +108,7 @@ else:
         "Only 1 and 10 crops are supported while we got {}".format(args.test_crops))
 
 data_loader = torch.utils.data.DataLoader(
-    TSNDataSet("", args.test_list, num_segments=2999,
+    TSNDataSet("", args.test_list, num_segments=25,
                new_length=1 if args.modality == "RGB" else 5,
                modality=args.modality,
                image_tmpl="{:06d}.jpg" if args.modality in [
@@ -157,7 +157,6 @@ def eval_video(video_data):
     input_var = torch.autograd.Variable(data.view(-1, length, data.size(2), data.size(3)),
                                         volatile=True)
     print("INPUT", input_var.shape)
-
     rst = net(ctx, input_var).data.cpu().numpy().copy()
     print("FEATURE: ", activation['fc'])
     print(activation['fc'].shape)
