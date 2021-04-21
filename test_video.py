@@ -108,7 +108,7 @@ else:
         "Only 1 and 10 crops are supported while we got {}".format(args.test_crops))
 
 data_loader = torch.utils.data.DataLoader(
-    TSNDataSet("", args.test_list, num_segments=25,
+    TSNDataSet("", args.test_list, num_segments=2999,
                new_length=1 if args.modality == "RGB" else 5,
                modality=args.modality,
                image_tmpl="{:06d}.jpg" if args.modality in [
@@ -138,6 +138,30 @@ total_num = len(data_loader.dataset)
 output = []
 
 ft = []
+
+
+def get_feature_frames(video_data):
+    i, data, label = video_data
+    print("SHAPE", data.shape)
+    num_crop = args.test_crops
+
+    if args.modality == 'RGB':
+        length = 3
+    elif args.modality == 'Flow':
+        length = 10
+    else:
+        raise ValueError("Unknown modality "+args.modality)
+    input_var = torch.autograd.Variable(data.view(-1, length, data.size(2), data.size(3)),
+                                        volatile=True)
+
+    print("INPUT", input_var.shape)
+    rst = net(ctx, input_var).data.cpu().numpy().copy()
+    print("FEATURE: ", activation['fc'])
+    print(activation['fc'].shape)
+    ft.append(activation['fc'])
+    return i, rst.reshape((num_crop, args.test_segments, num_class)).mean(axis=0).reshape(
+        (args.test_segments, 1, num_class)
+    ), label[0]
 
 
 def eval_video(video_data):
@@ -172,6 +196,7 @@ max_num = args.max_num if args.max_num > 0 else len(data_loader.dataset)
 for i, (data, label) in data_gen:
     if i >= max_num:
         break
+    print(data.shape)
     rst = eval_video((i, data, label))
     output.append(rst[1:])
     cnt_time = time.time() - proc_start_time
