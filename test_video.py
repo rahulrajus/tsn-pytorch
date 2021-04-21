@@ -198,7 +198,7 @@ for i, (data, label) in data_gen:
     if i >= max_num:
         break
     print("DATA SHAPE", data.shape)
-    rst = eval_video((i, data, label))
+    rst = get_feature_frames((i, data, label))
     output.append(rst[1:])
     cnt_time = time.time() - proc_start_time
     print('video {} done, total {}/{}, average {} sec/video'.format(i, i+1,
