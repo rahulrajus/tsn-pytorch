@@ -201,7 +201,7 @@ TSN Configurations:
 
     @staticmethod
     def forward(ctx, input):
-        print(input.shape())
+        # print(input.shape)
         sample_len = (3 if ctx['modality'] == "RGB" else 2) * ctx['new_length']
 
         if ctx['modality'] == 'RGBDiff':
