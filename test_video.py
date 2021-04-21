@@ -158,9 +158,14 @@ def get_feature_frames(video_data):
     print("INPUT SPLIT", input_split)
     print("INPUT SPLIT", len(input_split))
     print("INPUT SPLIT", input_split[0].shape)
+    feats = []
     for frame_batch in input_split:
         rst = net(ctx, frame_batch).data.cpu().numpy().copy()
-        print(activation['fc'])
+        feats.append(activation['fc'])
+    feat_stack = torch.stack(feats)
+    print(feat_stack)
+    print(feat_stack.shape)
+    # return feats
 
     # rst = net(ctx, input_var).data.cpu().numpy().copy()
     # print("FEATURE: ", activation['fc'])
