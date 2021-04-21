@@ -153,8 +153,9 @@ def get_feature_frames(video_data):
         raise ValueError("Unknown modality "+args.modality)
     input_var = torch.autograd.Variable(data.view(-1, length, data.size(2), data.size(3)),
                                         volatile=True)
-
+    input_split = torch.split(input_var, 2)
     print("INPUT", input_var.shape)
+    print("INPUT SPLIT", input_split.shape)
     rst = net(ctx, input_var).data.cpu().numpy().copy()
     print("FEATURE: ", activation['fc'])
     print(activation['fc'].shape)
